@@ -114,7 +114,7 @@ class TickerRenderer(Renderer, ABC):
         :return: price: (str) Formatted price string
         """
         if currency in CURRENCIES:
-            return f'{CURRENCIES.get(currency)}{price}'
+            return f"{CURRENCIES.get(currency)}{format(price, '.2f')}"
         return str(price)
 
     @staticmethod
