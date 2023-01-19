@@ -5,6 +5,7 @@ from typing import List
 
 import multitasking
 
+from data.nft import NFT
 from matrix.matrix_config import MatrixConfig
 from data.crypto import Crypto
 from data.forex import Forex
@@ -24,6 +25,7 @@ class Data:
     cryptos: List[Ticker] = field(default_factory=list)
     stocks: List[Ticker] = field(default_factory=list)
     forex: List[Forex] = field(default_factory=list)
+    nfts: List[Ticker] = field(default_factory=list)
     valid_tickers: int = 0
     status: Status = Status.SUCCESS
     last_updated: float = None
@@ -52,8 +54,10 @@ class Data:
             self.fetch_crypto(crypto, self.config.currency)
         for forex in self.config.forex:  # Initialize forex
             self.fetch_forex(forex)
+        for nft in self.config.nfts:  # Initialize forex
+            self.fetch_nft(nft)
         # Wait until all tickers are initialized
-        while len(self.stocks + self.cryptos + self.forex) < self.valid_tickers:
+        while len(self.stocks + self.cryptos + self.forex + self.nfts) < self.valid_tickers:
             time.sleep(0.1)
 
         self.date = self.get_date()
@@ -121,6 +125,19 @@ class Data:
         else:
             self.valid_tickers -= 1
             logging.warning(f'Forex: {forex.symbol} is not valid.')
+
+    @multitasking.task
+    def fetch_nft(self, symbol: str):
+        """
+        Fetch forex rates
+        :param symbol: Forex pair
+        """
+        nft = NFT(symbol)
+        if nft.valid:
+            self.nfts.append(nft)
+        else:
+            self.valid_tickers -= 1
+            logging.warning(f'Forex: {nft.symbol} is not valid.')
 
     @multitasking.task
     def update_ticker(self, ticker: Ticker):

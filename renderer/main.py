@@ -3,6 +3,7 @@ from renderer.clock import ClockRenderer
 from renderer.crypto import CryptoRenderer
 from renderer.error import ErrorRenderer
 from renderer.forex import ForexRenderer
+from renderer.nft import NFTRenderer
 from renderer.renderer import Renderer
 from renderer.stock import StockRenderer
 
@@ -31,6 +32,7 @@ class MainRenderer(Renderer):
         self.stocks = StockRenderer(self.matrix, self.canvas, self.draw, self.config, self.data)
         self.crypto = CryptoRenderer(self.matrix, self.canvas, self.draw, self.config, self.data)
         self.forex = ForexRenderer(self.matrix, self.canvas, self.draw, self.config, self.data)
+        self.nfts = NFTRenderer(self.matrix, self.canvas, self.draw, self.config, self.data)
         self.error = ErrorRenderer(self.matrix, self.canvas, self.draw, self.config, self.data)
         self.render()
 
@@ -40,6 +42,7 @@ class MainRenderer(Renderer):
                 self.clock.render()
                 self.stocks.render()
                 self.crypto.render()
+                self.nfts.render()
                 self.forex.render()
                 if self.data.should_update():
                     self.status = self.data.update()

@@ -67,6 +67,17 @@ def get_forex(pref: str) -> list:
                              instruction='(Separate each pair by a space)').ask().upper().split()
     return [i for n, i in enumerate(forex) if i not in forex[:n]]
 
+def get_nfts(pref: str) -> list:
+    """
+    Get user's preferred nfts.
+    :param pref (str) Current preferred cryptos list
+    :return: cryptos: (list) List of cryptos
+    """
+    nfts = questionary.text('Enter NFT OS slugs:',
+                               default=' ' if len(pref) < 1 else pref,
+                               qmark='\U0001F4B0',
+                               instruction='(Separate each slug by a space)').ask().upper().split()
+    return [i for n, i in enumerate(nfts) if i not in nfts[:n]]
 
 def get_currency(pref: str) -> str:
     """
@@ -163,6 +174,7 @@ def set_preferences(config: dict, current_config: dict) -> dict:
     config['tickers']['stocks'] = get_stocks(current_config['stocks'])
     config['tickers']['cryptos'] = get_cryptos(current_config['cryptos'])
     config['tickers']['forex'] = get_forex(current_config['forex'])
+    config['tickers']['nfts'] = get_nfts(current_config['nfts'])
     config['options']['currency'] = get_currency(current_config['currency'])
     config['options']['clock_format'] = get_clock_format(current_config['clock_format'])
     config['options']['date_format'] = get_date_format(current_config['date_format'])
