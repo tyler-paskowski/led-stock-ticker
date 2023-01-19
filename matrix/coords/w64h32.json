@@ -66,6 +66,21 @@
                 "size": [64, 14]
             }
         },
+        "nft": {
+            "symbol": {
+                "x": "left",
+                "y": 6,
+                "offset": 1
+            },
+            "price": {
+                "x": "center",
+                "y": 12,
+                "offset": 0
+            },
+            "logo": {
+                "size": [64, 28]
+            }
+        },
         "forex": {
             "price": {
                 "x": "left",

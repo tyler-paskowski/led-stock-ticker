@@ -17,7 +17,7 @@ class NFTRenderer(TickerRenderer):
         self.nfts: list = self.data.nfts
 
         for nft in self.nfts:
-            nft.img = load_image_url(nft.img_url, tuple(self.coords['crypto']['logo']['size']))
+            nft.img = load_image_url(nft.img_url, tuple(self.coords['nft']['logo']['size']))
 
     def render(self):
         logging.debug("self.nfts: " + str(self.nfts))
@@ -34,15 +34,22 @@ class NFTRenderer(TickerRenderer):
             #elif self.coords['options']['history_chart']:
             #    self.render_chart(previous_close, crypto.chart_prices, crypto.value_change)
             self.render_price(str(crypto.price) + " ETH", 'crypto')
-            self.render_symbol(crypto.symbol.replace('-USD', ''))  # Remove currency exchange
             self.render_percentage_change(crypto.pct_change, crypto.value_change)
             self.matrix.SetImage(self.canvas)
             time.sleep(self.config.rotation_rate)
 
-    def render_symbol(self, symbol: str):
-        x = align_text(self.font.getsize(symbol),
+    def render_name(self, name: str):
+        x, y = align_text(self.font.getsize(name),
+                          self.matrix.width,
+                          self.matrix.height,
+                          Position.CENTER,
+                          Position.TOP)
+        self.draw.text((x, y), name, self.text_color, self.font)
+
+    def render_price(self, price: str, ticker_type: str):
+        x = align_text(self.font.getsize(price),
                        col_width=self.matrix.width,
                        x=Position(self.coords['crypto']['symbol']['x']))[0]
         x += self.coords['crypto']['symbol']['offset']
         y = self.coords['crypto']['symbol']['y']
-        self.draw.text((x, y), symbol, self.text_color, self.font)
+        self.draw.text((x, y), price, self.text_color, self.font)

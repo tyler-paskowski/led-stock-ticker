@@ -27,7 +27,7 @@ class NFT(Ticker):
         self.value_change = data.get("collection").get("stats").get("one_day_change")
         self.pct_change = f'{float(data.get("collection").get("stats").get("one_day_change")):.2f}%'
         self.chart_prices = [] #self.get_chart_prices()
-        self.img_url = "https://i.seadn.io/gcs/files/0d5f1b200a067938f507cbe12bbbabc2.jpg?w=500&auto=format"
+        self.img_url = data.get("collection").get("image_url")
 
     def get_prev_close(self) -> float:
         """
