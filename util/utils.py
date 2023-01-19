@@ -181,7 +181,7 @@ def load_image_url(url: str, size: Tuple[int, int]) -> Image:
     :exception ConnectionError: If connection error occurred
     """
     if url:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         if response.ok:
             try:
                 with Image.open(BytesIO(response.content)) as img:

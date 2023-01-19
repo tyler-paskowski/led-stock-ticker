@@ -9,7 +9,7 @@ from data.ticker import Ticker
 from data.status import Status
 from util.utils import convert_currency
 import requests
-
+import logging
 
 @dataclass
 class NFT(Ticker):
@@ -18,14 +18,14 @@ class NFT(Ticker):
     def initialize(self):
         #super(NFT, self).initialize()
         data = self.get_collection(self.symbol)
-
+        logging.debug("fetching initial data for " + self.symbol) 
 
         self.yf_ticker = None
         self.name = self.symbol
         self.price = data.get("collection").get("stats").get("floor_price")
         self.prev_close = self.get_prev_close()
         self.value_change = data.get("collection").get("stats").get("one_day_change")
-        self.pct_change = f'{100 * float(data.get("collection").get("stats").get("one_day_change")):.2f}%'
+        self.pct_change = f'{float(data.get("collection").get("stats").get("one_day_change")):.2f}%'
         self.chart_prices = [] #self.get_chart_prices()
         self.img_url = "https://i.seadn.io/gcs/files/0d5f1b200a067938f507cbe12bbbabc2.jpg?w=500&auto=format"
 
@@ -54,6 +54,6 @@ class NFT(Ticker):
             self.status = Status.FAIL
 
     def get_collection(self, slug) -> dict:
-        url = "https://api.opensea.io/api/v1/collection/" + slug
-        response = requests.get(url)
+        url = "https://api.opensea.io/api/v1/collection/" + slug.lower()
+        response = requests.get(url, timeout=10)
         return response.json()

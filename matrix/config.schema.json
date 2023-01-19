@@ -6,7 +6,7 @@
   "properties": {
     "tickers": {
       "type": "object",
-      "required": ["stocks", "cryptos", "forex"],
+      "required": ["stocks", "cryptos", "forex", "nfts"],
       "properties": {
         "stocks": {
           "type": "array",
@@ -31,7 +31,15 @@
           "minItems": 0,
           "uniqueItems": true,
           "default": ["USD/EUR", "EUR/JPY", "GBP/USD"]
-        }
+        },
+	"nfts":{
+	  "type": "array",
+	  "description": "List of NFT Collections",
+	  "pattern": "^([A-Z]+)$",
+	  "minItems": 0,
+	  "uniqueItems": true,
+	  "default": []
+	}
       },
       "additionalProperties": false
     },

@@ -46,7 +46,7 @@ class Data:
         :exception Timeout: If the request timed out
         """
         logging.info('Initializing data...')
-
+        logging.info(str(self.config))
         self.market_status = market_status()
         for stock in self.config.stocks:  # Initialize stocks
             self.fetch_stock(stock, self.config.currency)
@@ -133,8 +133,11 @@ class Data:
         :param symbol: Forex pair
         """
         nft = NFT(symbol)
+        logging.debug("created instance of NFT for "+ symbol)
+        logging.debug(str(nft))
         if nft.valid:
             self.nfts.append(nft)
+            logging.debug("appended self.nfts: " + str(self.nfts))
         else:
             self.valid_tickers -= 1
             logging.warning(f'Forex: {nft.symbol} is not valid.')

@@ -21,6 +21,7 @@ def get_current_preferences() -> dict:
         'stocks': ' '.join(preferences['tickers']['stocks']),
         'cryptos': ' '.join(preferences['tickers']['cryptos']),
         'forex': ' '.join(preferences['tickers']['forex']),
+        'nfts': ' '.join(preferences['tickers']['nfts']),
         'currency': preferences['options']['currency'],
         'clock_format': preferences['options']['clock_format'],
         'date_format': preferences['options']['date_format'],

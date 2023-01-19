@@ -21,6 +21,7 @@ class MatrixConfig:
     stocks: List[str] = field(default_factory=list)
     cryptos: List[str] = field(default_factory=list)
     forex: List[str] = field(default_factory=list)
+    nfts: List[str] = field(default_factory=list)
     currency: str = DEFAULT_CURRENCY
     clock_format: str = TWELVE_HOURS_FORMAT
     date_format: str = DEFAULT_DATE_FORMAT
@@ -41,6 +42,7 @@ class MatrixConfig:
             self.stocks = self.config['tickers']['stocks']
             self.cryptos = self.format_cryptos(self.config['tickers']['cryptos'])
             self.forex = self.format_forex(self.config['tickers']['forex'])
+            self.nfts = self.config['tickers']['nfts']
             self.currency = self.config['options']['currency']
             self.clock_format = self.get_time_format(self.config['options']['clock_format'])
             self.date_format = self.config['options']['date_format']
