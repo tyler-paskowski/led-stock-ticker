@@ -25,7 +25,7 @@ class NFT(Ticker):
         self.price = data.get("collection").get("stats").get("floor_price")
         self.prev_close = self.get_prev_close()
         self.value_change = data.get("collection").get("stats").get("one_day_change")
-        self.pct_change = f'{float(data.get("collection").get("stats").get("one_day_change")):.2f}%'
+        self.pct_change = f'{float(data.get("collection").get("stats").get("one_day_volume")):.2f} ETH 24h Vol.'
         self.chart_prices = [] #self.get_chart_prices()
         self.img_url = data.get("collection").get("image_url")
 
